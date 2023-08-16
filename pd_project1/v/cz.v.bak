@@ -1,0 +1,20 @@
+module cz(
+	input clk,
+	input c, c_en,
+	input z, z_en,
+	output reg cflag, zflag
+);
+endmodule
+
+
+module pc(
+	input clk,
+	input [15:0] pc_next,
+	output reg [15:0] pc
+);
+	
+	always @(posedge clk)
+		pc = pc_next;
+	
+endmodule
+

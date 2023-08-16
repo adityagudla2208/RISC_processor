@@ -1,0 +1,24 @@
+module IF2ID(
+	input clk,
+	input [15:0]pc,input [15:0]pcplus1, input [15:0]Inst,
+
+	output reg [15:0]pc_d,output reg [15:0]pcplus1_d, output reg [15:0]Inst_d
+);
+
+	reg [15:0] pc_s = 16'h0000;
+	reg [15:0] pcplus1_s = 16'h0000;
+	reg [15:0] Inst_s = 16'h0000;
+	
+	always @(posedge clk)
+	begin
+      pc_d <= pc_s;
+      pcplus1_d <= pcplus1_s;	
+	   Inst_d <= Inst_s;
+
+      pc_s <= pc;
+      pcplus1_s <= pcplus1;	
+	   Inst_s <= Inst;
+		
+	end
+
+endmodule

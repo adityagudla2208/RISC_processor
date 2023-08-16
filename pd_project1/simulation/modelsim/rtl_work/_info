@@ -1,0 +1,32 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/krish/Desktop/MTech_IIT-B/Sem2_Spring_2021-22/EE739_Proc_Design/course_content/pd_project1/simulation/modelsim
+valu
+!s110 1649427549
+!i10b 1
+!s100 `n9jTdFZ>KI55KFE>KCkQ2
+I<^fjdT?g_gR?zSD;X<XQY0
+VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1649427526
+8/home/krish/Desktop/MTech_IIT-B/Sem2_Spring_2021-22/EE739_Proc_Design/course_content/pd_project1/v/alu.v
+F/home/krish/Desktop/MTech_IIT-B/Sem2_Spring_2021-22/EE739_Proc_Design/course_content/pd_project1/v/alu.v
+L0 1
+OV;L;10.5b;63
+r1
+!s85 0
+31
+!s108 1649427549.000000
+!s107 /home/krish/Desktop/MTech_IIT-B/Sem2_Spring_2021-22/EE739_Proc_Design/course_content/pd_project1/v/alu.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/krish/Desktop/MTech_IIT-B/Sem2_Spring_2021-22/EE739_Proc_Design/course_content/pd_project1/v|/home/krish/Desktop/MTech_IIT-B/Sem2_Spring_2021-22/EE739_Proc_Design/course_content/pd_project1/v/alu.v|
+!i113 1
+o-vlog01compat -work work
+!s92 -vlog01compat -work work +incdir+/home/krish/Desktop/MTech_IIT-B/Sem2_Spring_2021-22/EE739_Proc_Design/course_content/pd_project1/v
+tCvgOpt 0

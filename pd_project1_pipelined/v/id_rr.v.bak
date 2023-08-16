@@ -1,0 +1,131 @@
+module ID2RR(
+	input clk,
+
+	
+	
+	
+	 input  m1_sel,
+	 input  [1:0] m2_sel,
+	 input  reg_wr_en,
+	 input  m3_sel,
+	 input  m4_sel,
+	 input  m5_sel,
+	 input  [3:0] shft_amt,
+	 input  rtype,
+	 input  [1:0] alu_op,
+	 input  m6_sel,
+	 input  [2:0] m7_sel,
+	 input  mem_write_en,
+	 input  [1:0] m8_sel,
+	 input  c_en,
+	 input  z_en,
+	 input  [15:0] sign6bit,	 
+	 input  [15:0] sign9bit,
+	 input  [15:0] m1out,
+	 input  [15:0] RegA,
+	 input  [15:0] RegB,
+	 input  [15:0] RegC,
+
+	 output reg m1_sel_d,
+	 output reg [1:0] m2_sel_d,
+	 output reg reg_wr_en_d,
+	 output reg m3_sel_d,
+	 output reg m4_sel_d,
+	 output reg m5_sel_d,
+	 output reg [3:0] shft_amt_d,
+	 output reg rtype_d,
+	 output reg [1:0] alu_op_d,
+	 output reg m6_sel_d,
+	 output reg [2:0] m7_sel_d,
+	 output reg mem_write_en_d,
+	 output reg [1:0] m8_sel_d,
+	 output reg c_en_d,
+	 output reg z_en_d,
+	 output reg [15:0] sign6bit_d,	 
+	 output reg [15:0] sign9bit_d,
+	 output reg [15:0] m1out_d,
+	 output reg [15:0] RegA_d,
+	 output reg [15:0] RegB_d,
+	 output reg [15:0] RegC_d	 	 
+	 
+	 
+	 
+);
+
+
+	  reg m1_sel_s;
+	  reg [1:0] m2_sel_s;
+	  reg reg_wr_en_s;
+	  reg m3_sel_s;
+	  reg m4_sel_s;
+	  reg m5_sel_s;
+	  reg [3:0] shft_amt_s;
+	  reg rtype_s;
+	  reg [1:0] alu_op_s;
+	  reg m6_sel_s;
+	  reg [2:0] m7_sel_s;
+	  reg mem_write_en_s;
+	  reg [1:0] m8_sel_s;
+	  reg c_en_s;
+	  reg z_en_s;
+	  reg [15:0] sign6bit_s	 ;
+	  reg [15:0] sign9bit_s;
+	  reg [15:0] m1out_s;
+	  reg [15:0] RegA_s;
+	  reg [15:0] RegB_s;
+	  reg [15:0] RegC_s; 
+
+	
+	always @(posedge clk)
+	begin
+	
+	
+	  m1_sel_d <= m1_sel_s;
+	  m2_sel_d <= m2_sel_s;
+	  reg_wr_en_d <= reg_wr_en_s;
+	  m3_sel_d <= m3_sel_s; 
+	  m4_sel_d <= m4_sel_s;
+	  m5_sel_d <= m5_sel_s;
+	  shft_amt_d <= shft_amt_s;
+	  rtype_d <= rtype_s;
+	  alu_op_d <= alu_op_s;
+	  m6_sel_d <= m6_sel_s;
+	  m7_sel_d <= m7_sel_s;
+	  mem_write_en_d <= mem_write_en_s;
+	  m8_sel_d <= m8_sel_s;
+	  c_en_d <= c_en_s;
+	  z_en_d <= z_en_s;
+	  sign6bit_d <= sign6bit_s;	 
+	  sign9bit_d <= sign9bit_s;
+	  m1out_d <= m1out_s;
+	  RegA_d <= RegA_s;
+	  RegB_d <= RegB_s;
+	  RegC_d	<= RegC_s;
+
+	  
+	  m1_sel_s <= m1_sel_d;
+	  m2_sel_s <= m2_sel_d;
+	  reg_wr_en_s <= reg_wr_en_d;
+	  m3_sel_s <= m3_sel_d; 
+	  m4_sel_s <= m4_sel_d;
+	  m5_sel_s <= m5_sel_d;
+	  shft_amt_s <= shft_amt_d;
+	  rtype_s <= rtype_d;
+	  alu_op_s <= alu_op_d;
+	  m6_sel_s <= m6_sel_d;
+	  m7_sel_s <= m7_sel_d;
+	  mem_write_en_s <= mem_write_en_d;
+	  m8_sel_s <= m8_sel_d;
+	  c_en_s <= c_en_d;
+	  z_en_s <= z_en_d;
+	  sign6bit_s <= sign6bit_d;	 
+	  sign9bit_s <= sign9bit_d;
+	  m1out_s<= m1out_d;
+	  RegA_s <= RegA_d;
+	  RegB_s <= RegB_d;
+	  RegC_s	= RegC_d;
+	  
+		
+	end
+
+endmodule

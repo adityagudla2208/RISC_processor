@@ -1,0 +1,5 @@
+module sign_ext6(
+	input [
+);
+
+endmodule

@@ -1,0 +1,386 @@
+module control_block( 
+                input reset,
+					 input [15:0]Instruction,
+					 output reg C_ins,////
+					 output reg Z_ins,
+					 output reg[1:0] m2_reg_wr_dst,
+					 output reg m1_Imm_sel,
+					 output reg m3_Imm_sel,
+					 output reg reg_write,
+					 output reg m5_alu1op1_sel,
+					 output reg m4_alu1op2_sel,
+					 output reg[2:0] barrel_shifter_cntrl,
+					 output reg R_type,
+					 output reg[1:0] alu1_op,
+					 output reg Branch,   // for BZ
+					 output reg[2:0] pc_target_address,
+					 output reg MemWrite,
+					 output reg [1:0]WB_Ctrl,
+					 output reg Cwrite,
+					 output reg Zwrite
+                                
+   ); 
+
+	wire [3:0] op_code;
+	reg [1:0] CZ;
+	assign op_code =  Instruction[15:12];
+	//assign cz =  (Instruction[1:0] == 4'b0001) ;	
+	//assign mem_read_data = (mem_read==1'b1) ? ram[ram_addr]: 16'd0; 
+	//assign C_ins = Instruction[1];
+	//assign Z_ins = Instruction[0];	
+	
+always@(*)
+begin
+	 C_ins = Instruction[1];
+	 Z_ins = Instruction[0];
+	if((Instruction[15:12] == 4'b0001)| (Instruction[15:12] == 4'b0010))
+		begin
+		CZ = Instruction[1:0];
+		end
+	 else
+		CZ = 2'bXX;
+end
+
+	
+ always @(*)  
+ begin  
+      if(reset == 1'b1) begin  
+ 
+					 m2_reg_wr_dst = 2'b00;
+					 m1_Imm_sel = 1'bX;
+					 m3_Imm_sel= 1'bX;
+					 reg_write= 1'bX;
+					 m5_alu1op1_sel= 1'bX;
+					 m4_alu1op2_sel= 1'bX;
+					 barrel_shifter_cntrl= 3'bXXX;
+					 R_type = 1'bX;
+					 alu1_op = 2'bXX;
+					 Branch = 1'bX;   // for BZ
+					 pc_target_address= 3'bXXX;
+					 MemWrite = 1'bX;
+					 WB_Ctrl = 1'bX;
+					 Cwrite = 1'bx;
+					 Zwrite = 1'bx;
+      end  
+      else begin  
+      case(op_code) 
+      4'b0000: begin // ADI 
+					 m2_reg_wr_dst = 2'b11;
+					 m1_Imm_sel = 1'b1;
+					 m3_Imm_sel= 1'bX;
+					 reg_write= 1'b1;
+					 m5_alu1op1_sel= 1'b0;
+					 m4_alu1op2_sel= 1'b0;
+					 barrel_shifter_cntrl= 3'b000;
+					 R_type = 1'b0;
+					 alu1_op = 2'b00;
+					 Branch = 1'bX;   // for BZ
+					 pc_target_address= 3'b000;
+					 MemWrite = 1'bX;
+					 WB_Ctrl = 2'b00;
+					 Cwrite = 1'b1;
+					 Zwrite = 1'b1;	 
+                end		
+      4'b0001: begin // add
+						case(CZ)
+						2'b00:begin 
+									 m2_reg_wr_dst = 2'b01;
+									 m1_Imm_sel = 1'bX;
+									 m3_Imm_sel= 1'bX;
+									 reg_write= 1'b1;
+									 m5_alu1op1_sel= 1'b0;
+									 m4_alu1op2_sel= 1'b1;
+									 barrel_shifter_cntrl= 3'b000;
+									 R_type = 1'b1;
+									 alu1_op = 2'b00;
+									 Branch = 1'bX;   // for BZ
+									 pc_target_address= 3'b000;
+									 MemWrite = 1'bX;
+									 WB_Ctrl = 2'b00;
+									 Cwrite = 1'b1;
+									 Zwrite = 1'b1;
+								end
+						2'b10:begin
+									 m2_reg_wr_dst = 2'b01;
+									 m1_Imm_sel = 1'bX;
+									 m3_Imm_sel= 1'bX;
+									 reg_write= 1'b1;
+									 m5_alu1op1_sel= 1'b0;
+									 m4_alu1op2_sel= 1'b1;
+									 barrel_shifter_cntrl= 3'b000;
+									 R_type = 1'b1;
+									 alu1_op = 2'b00;
+									 Branch = 1'bX;   // for BZ
+									 pc_target_address= 3'b000;
+									 MemWrite = 1'bX;
+									 WB_Ctrl = 2'b00;
+									 Cwrite = 1'b1;
+					             Zwrite = 1'b1;						
+								end
+						2'b01:begin
+									 m2_reg_wr_dst = 2'b01;
+									 m1_Imm_sel = 1'bX;
+									 m3_Imm_sel= 1'bX;
+									 reg_write= 1'b1;
+									 m5_alu1op1_sel= 1'b0;
+									 m4_alu1op2_sel= 1'b1;
+									 barrel_shifter_cntrl= 3'b000;
+									 R_type = 1'b1;
+									 alu1_op = 2'b00;
+									 Branch = 1'bX;   // for BZ
+									 pc_target_address= 3'b000;
+									 MemWrite = 1'bX;
+									 WB_Ctrl = 2'b00;
+								    Cwrite = 1'b1;
+					             Zwrite = 1'b1;
+								end
+						2'b11:begin
+									 m2_reg_wr_dst = 2'b01;
+									 m1_Imm_sel = 1'bX;
+									 m3_Imm_sel= 1'bX;
+									 reg_write= 1'b1;
+									 m5_alu1op1_sel= 1'b0;
+									 m4_alu1op2_sel= 1'b1;
+									 barrel_shifter_cntrl= 3'b001;
+									 R_type = 1'b1;
+									 alu1_op = 2'b00;
+									 Branch = 1'bX;   // for BZ
+									 pc_target_address= 3'b000;
+									 MemWrite = 1'bX;
+									 WB_Ctrl = 2'b00;
+								    Cwrite = 1'b1;
+					             Zwrite = 1'b1;									 
+								end
+					default:begin
+									 m1_Imm_sel = 1'b0;		
+									 m2_reg_wr_dst = 2'bXX;
+									 m3_Imm_sel= 1'bX;
+									 reg_write= 1'bX;
+									 m5_alu1op1_sel= 1'bX;
+									 m4_alu1op2_sel= 1'bX;
+									 barrel_shifter_cntrl= 3'bXXX;
+									 R_type = 1'bX;
+									 alu1_op = 2'bXX;
+									 Branch = 1'bX;   // for BZ
+									 pc_target_address= 3'bXXX;
+									 MemWrite = 1'bX;
+									 WB_Ctrl = 1'bX; 
+									 Cwrite = 1'bX;
+									 Zwrite = 1'bX;
+								  end		
+					 endcase
+                end  
+       4'b0010: begin // add  
+						case(CZ)
+						2'b00:begin 
+									 m2_reg_wr_dst = 2'b01;
+									 m1_Imm_sel = 1'bX;
+									 m3_Imm_sel= 1'bX;
+									 reg_write= 1'b1;
+									 m5_alu1op1_sel= 1'b0;
+									 m4_alu1op2_sel= 1'b1;
+									 barrel_shifter_cntrl= 3'b000;
+									 R_type = 1'b1;
+									 alu1_op = 2'b01;
+									 Branch = 1'bX;   // for BZ
+									 pc_target_address= 3'b000;
+									 MemWrite = 1'bX;
+									 WB_Ctrl = 2'b00;
+								    Cwrite = 1'b0;
+					             Zwrite = 1'b1;									 
+								end
+						2'b10:begin
+									 m2_reg_wr_dst = 2'b01;
+									 m1_Imm_sel = 1'bX;
+									 m3_Imm_sel= 1'bX;
+									 reg_write= 1'b1;
+									 m5_alu1op1_sel= 1'b0;
+									 m4_alu1op2_sel= 1'b1;
+									 barrel_shifter_cntrl= 3'b000;
+									 R_type = 1'b1;
+									 alu1_op = 2'b01;
+									 Branch = 1'bX;   // for BZ
+									 pc_target_address= 3'b000;
+									 MemWrite = 1'bX;
+									 WB_Ctrl = 2'b00;
+								    Cwrite = 1'b0;
+					             Zwrite = 1'b1;									 
+								end
+						2'b01:begin
+									 m2_reg_wr_dst = 2'b01;
+									 m1_Imm_sel = 1'bX;
+									 m3_Imm_sel= 1'bX;
+									 reg_write= 1'b1;
+									 m5_alu1op1_sel= 1'b0;
+									 m4_alu1op2_sel= 1'b1;
+									 barrel_shifter_cntrl= 3'b000;
+									 R_type = 1'b1;
+									 alu1_op = 2'b01;
+									 Branch = 1'bX;   // for BZ
+									 pc_target_address= 3'b000;
+									 MemWrite = 1'bX;
+									 WB_Ctrl = 2'b00;
+								    Cwrite = 1'b0;
+					             Zwrite = 1'b1;									 
+									 end
+							default:
+									begin
+									 m1_Imm_sel = 1'b0;		
+									 m2_reg_wr_dst = 2'bXX;
+									 m3_Imm_sel= 1'bX;
+									 reg_write= 1'bX;
+									 m5_alu1op1_sel= 1'bX;
+									 m4_alu1op2_sel= 1'bX;
+									 barrel_shifter_cntrl= 3'bXXX;
+									 R_type = 1'bX;
+									 alu1_op = 2'bXX;
+									 Branch = 1'bX;   // for BZ
+									 pc_target_address= 3'bXXX;
+									 MemWrite = 1'bX;
+									 WB_Ctrl = 1'bX; 
+									 Cwrite = 1'bX;
+									 Zwrite = 1'bX;
+									end			 
+					 endcase
+                end
+       4'b0011: begin // LHI  
+					 m2_reg_wr_dst = 2'b10;
+					 m1_Imm_sel = 1'b0;
+					 m3_Imm_sel= 1'bX;
+					 reg_write= 1'b1;
+					 m5_alu1op1_sel= 1'bX;
+					 m4_alu1op2_sel= 1'b0;
+					 barrel_shifter_cntrl= 3'b111;
+					 R_type = 1'b0;
+					 alu1_op = 2'b11;
+					 Branch = 1'bX;   // for BZ
+					 pc_target_address= 3'b000;
+					 MemWrite = 1'bX;
+					 WB_Ctrl = 2'b10;  
+					 Cwrite = 1'b0;
+					 Zwrite = 1'b0;
+                end
+       4'b0100: begin // LW  
+					 m2_reg_wr_dst = 2'b10;
+					 m1_Imm_sel = 1'b1;
+					 m3_Imm_sel= 1'bX;
+					 reg_write= 1'b1;
+					 m5_alu1op1_sel= 1'b1;
+					 m4_alu1op2_sel= 1'b0;
+					 barrel_shifter_cntrl= 3'b000;
+					 R_type = 1'b0;
+					 alu1_op = 2'b00;
+					 Branch = 1'bX;   // for BZ
+					 pc_target_address= 3'b000;
+					 MemWrite = 1'b0;
+					 WB_Ctrl = 2'b01;
+					 Cwrite = 1'b0;
+					 Zwrite = 1'b1;					 
+                end
+       4'b0101: begin // SW  
+					 m2_reg_wr_dst = 2'bXX;
+					 m1_Imm_sel = 1'b1;
+					 m3_Imm_sel= 1'bX;
+					 reg_write= 1'b0;
+					 m5_alu1op1_sel= 1'b1;
+					 m4_alu1op2_sel= 1'b0;
+					 barrel_shifter_cntrl= 3'b000;
+					 R_type = 1'b0;
+					 alu1_op = 2'b00;
+					 Branch = 1'bX;   // for BZ
+					 pc_target_address= 3'b000;
+					 MemWrite = 1'b1;
+					 WB_Ctrl = 2'bXX;  
+					 Cwrite = 1'b0;
+					 Zwrite = 1'b0;
+                end	
+       4'b1000: begin // BEQ  
+					 m2_reg_wr_dst = 2'bXX;
+					 m1_Imm_sel = 1'b1;
+					 m3_Imm_sel= 1'b1;
+					 reg_write= 1'b0;
+					 m5_alu1op1_sel= 1'b0;
+					 m4_alu1op2_sel= 1'b1;
+					 barrel_shifter_cntrl= 3'b000;
+					 R_type = 1'b0;
+					 alu1_op = 2'b10;
+					 Branch = 1'b1;   // for BZ
+					 pc_target_address= 3'b100;
+					 MemWrite = 1'b0;
+					 WB_Ctrl = 2'bXX;  
+					 Cwrite = 1'b0;
+					 Zwrite = 1'b0;
+                end					
+		 4'b1001: begin // JAL  
+					 m2_reg_wr_dst = 2'b10;
+					 m1_Imm_sel = 1'b0;
+					 m3_Imm_sel= 1'b0;
+					 reg_write= 1'b1;
+					 m5_alu1op1_sel= 1'bX;
+					 m4_alu1op2_sel= 1'bX;
+					 barrel_shifter_cntrl= 3'b000;
+					 R_type = 1'b0;
+					 alu1_op = 2'b11;
+					 Branch = 1'b0;   // for BZ
+					 pc_target_address= 3'b001;
+					 MemWrite = 1'b0;
+					 WB_Ctrl = 2'b11;  
+					 Cwrite = 1'b0;
+					 Zwrite = 1'b0;
+                end	
+		 4'b1010: begin // JLR  
+					 m2_reg_wr_dst = 2'b10;
+					 m1_Imm_sel = 1'bX;
+					 m3_Imm_sel= 1'b0;
+					 reg_write= 1'b1;
+					 m5_alu1op1_sel= 1'bX;
+					 m4_alu1op2_sel= 1'bX;
+					 barrel_shifter_cntrl= 3'b000;
+					 R_type = 1'b0;
+					 alu1_op = 2'b11;
+					 Branch = 1'b0;   // for BZ
+					 pc_target_address= 3'b010;
+					 MemWrite = 1'b0;
+					 WB_Ctrl = 2'b11;  
+					 Cwrite = 1'b0;
+					 Zwrite = 1'b0;
+                end	
+		 4'b1011: begin // JRI  
+		 			 m1_Imm_sel = 1'b0;
+					 m2_reg_wr_dst = 2'bXX;
+
+					 m3_Imm_sel= 1'b0;
+					 reg_write= 1'b0;
+					 m5_alu1op1_sel= 1'b0;
+					 m4_alu1op2_sel= 1'b0;
+					 barrel_shifter_cntrl= 3'b000;
+					 R_type = 1'b0;
+					 alu1_op = 2'b00;
+					 Branch = 1'b0;   // for BZ
+					 pc_target_address= 3'b011;
+					 MemWrite = 1'b0;
+					 WB_Ctrl = 2'bXX;  
+					 Cwrite = 1'b0;
+					 Zwrite = 1'b0;
+                end					 
+		default: begin
+					 m1_Imm_sel = 1'b0;		
+					 m2_reg_wr_dst = 2'bXX;
+					 m3_Imm_sel= 1'bX;
+					 reg_write= 1'bX;
+					 m5_alu1op1_sel= 1'bX;
+					 m4_alu1op2_sel= 1'bX;
+					 barrel_shifter_cntrl= 3'bXXX;
+					 R_type = 1'bX;
+					 alu1_op = 2'bXX;
+					 Branch = 1'bX;   // for BZ
+					 pc_target_address= 3'bXXX;
+					 MemWrite = 1'bX;
+					 WB_Ctrl = 1'bX; 
+					 Cwrite = 1'bX;
+					 Zwrite = 1'bX;
+                end  
+      endcase  
+      end  
+ end  
+ endmodule 

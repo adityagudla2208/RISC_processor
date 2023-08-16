@@ -1,0 +1,57 @@
+module RR2EX(
+	input clk,
+
+	input [15:0] pcplus1,
+   input [15:0] pc,
+   input [15:0] Imm6,
+   input [15:0] Imm9,
+   input  branch,
+   input [15:0] RegA,
+   input [15:0] RegB,
+   input [15:0] m1_out,
+	// alu1_result
+	output reg [15:0] pcplus1_d,
+   output reg [15:0] pc_d,
+   output reg [15:0] Imm6_d,
+   output reg [15:0] Imm9_d,
+   output reg branch_d,	
+	output reg [15:0]RegA_d,
+	output reg [15:0]RegB_d,
+	output reg [15:0]m1_out_d
+);
+
+	reg [15:0] pcplus1_s = 16'h0000;
+	reg [15:0]pc_s = 16'h0000;
+	reg [15:0]Imm6_s = 16'h0000;
+	reg [15:0]Imm9_s = 16'h0000;
+	reg branch_s = 1'b0;
+	reg [15:0]RegA_s= 16'h0000;
+	reg [15:0]RegB_s= 16'h0000;
+	reg [15:0]m1_out_s= 16'h0000;
+	
+	
+	always @(posedge clk)
+	begin
+	pcplus1_d <= pcplus1_s;
+	pc_d <= pc_s;
+	Imm6_d <= Imm6_s;
+	Imm9_d <= Imm9_s;
+	branch_d <= branch_s;	
+	RegA_d <= RegA_s;
+	RegB_d <= RegB_s;
+	m1_out_d <= m1_out_s;
+
+		
+	pcplus1_s <= pcplus1;
+	pc_s <= pc;
+	Imm6_s <= Imm6;
+	Imm9_s <= Imm9;
+	branch_s <= branch;	
+	RegA_s <= RegA;
+	RegB_s <= RegB;
+	m1_out_s <= m1_out;
+
+		
+	end
+
+endmodule
